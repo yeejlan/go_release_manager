@@ -2,7 +2,10 @@ package model
 
 import(
 	"github.com/yeejlan/maru"
-	"release_manager.domain"
+	"release_manager/domain"
+	"release_manager/dal/dao"
+	"crypto/md5"
+	"fmt"
 )
 
 var (
@@ -11,7 +14,7 @@ var (
 
 type userModel struct{}
 
-func (this *userModel) CurrentUserId(ctx *maru.WebContext) Int {
+func (this *userModel) CurrentUserId(ctx *maru.WebContext) int {
 	return ctx.Session.GetInt("uid")
 }
 
@@ -37,8 +40,8 @@ func (this *userModel) HasLoggedin(ctx *maru.WebContext, loginPageRedirect bool)
 }
 
 /*call this function when a page need admin privilege*/
-func (this *userModel) IsAdmin(pageRedirect bool) bool {
-	if this.CurrentRole() == "admin" {
+func (this *userModel) IsAdmin(ctx *maru.WebContext, pageRedirect bool) bool {
+	if this.CurrentRole(ctx) == "admin" {
 		return true
 	}
 	if(pageRedirect) {
@@ -49,9 +52,66 @@ func (this *userModel) IsAdmin(pageRedirect bool) bool {
 }
 
 func (this *userModel) GetUserById(userid int) (*domain.User, error) {
-	return dao.User.getUserById(userid)
+	return dao.User.GetUserById(userid)
 }
 
+//user login
+func (this *userModel) Login(ctx *maru.WebContext, username string, password string) (bool, error) {
+	if username == "" || password == "" {
+		return false, nil
+	}
 
+	user, err := dao.User.GetUserByName(username)
+	if err != nil {
+		return false, err
+	}
+	passwordMd5 := this.GetPasswordMd5(ctx, password)
+	if user.Password == passwordMd5 { //login success
+		session := ctx.Session
+		session.Set("uid", user.Id)
+		session.Set("username", user.Username)
+		session.Set("role", user.Role)
 
+		//Log.add(User.Id, User.Username, "login", "Success")
 
+		return true, nil
+	}
+
+	//Log.add(-1, user.Username, "login", "Failed")
+
+	return false, nil
+}
+
+func (this *userModel) VerifyPassword(ctx *maru.WebContext, userid int, password string) (bool, error) { 
+	if userid < 1 || password == "" {
+		return false, nil
+	}
+
+	user, err := dao.User.GetUserById(userid)
+	if err !=nil {
+		return false, err
+	}
+	passwordMd5 := this.GetPasswordMd5(ctx, password)
+	if user.Password == passwordMd5 {
+		return true, nil
+	}
+	return false, nil
+}
+
+func (this *userModel) ChangePassword(ctx *maru.WebContext, userid int, password string) (bool, error) {
+	if userid < 1 || password == "" {
+		return false, maru.NewError("bad param")
+	}
+	passwordMd5 := this.GetPasswordMd5(ctx, password)
+	_, err := dao.User.UpdatePassword(userid, passwordMd5)
+	if err != nil {
+		return false, err
+	}
+	return true, nil
+}
+
+func (this *userModel) GetPasswordMd5(ctx *maru.WebContext, password string) string {
+	sitePhrase := ctx.App.Config().Get("site.phrase")
+	data := []byte(password + sitePhrase)
+	return fmt.Sprintf("%x", md5.Sum(data))
+}
