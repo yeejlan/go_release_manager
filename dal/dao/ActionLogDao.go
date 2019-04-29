@@ -40,7 +40,7 @@ func (this *actionLogDao) List(dateFilter *time.Time, nameFilter string, offset 
 		"username": nameFilter,
 	}
 	sql := fmt.Sprintf("select * from action_log %s order by id desc limit :offset , :pageSize", optionSQL)
-	result = new([]domain.ActionLog)
+	result = &[]domain.ActionLog{}
 	err = dal.DB.Select(result, sql, p)
 	return
 }

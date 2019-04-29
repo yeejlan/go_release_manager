@@ -53,7 +53,7 @@ func (this *userDao) List(offset int, pageSize int) (result *[]domain.User, err 
 		"offset": offset,
 		"pageSize": pageSize,
 	}
-	result = new([]domain.User)
+	result = &[]domain.User{}
 	sql := "select * from users limit :offset, :pageSize"
 	err = dal.DB.Select(result, sql, p)
 	return
