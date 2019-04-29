@@ -59,3 +59,18 @@ func (this *DBHelper) Insert(sql string, params interface{}) (int, error) {
 	insertId, _ := result.LastInsertId()
 	return int(insertId), nil
 }
+
+//update or delete
+func (this *DBHelper) Update(sql string, params interface{}) (int, error) {
+	stmt, err := this.DB.PrepareNamed(sql)
+	if err!= nil {
+		return 0, maru.WrapError(err, 3)
+	}
+
+	result, err := stmt.Exec(params)
+	if err!= nil {
+		return 0, maru.WrapError(err, 3)
+	}
+	rowsAffected, _ := result.RowsAffected()
+	return int(rowsAffected), nil
+}
