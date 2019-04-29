@@ -53,7 +53,7 @@ func (this *actionLogDao) Count(dateFilter *time.Time, nameFilter string) (resul
 		"username": nameFilter,
 	}
 	sql := fmt.Sprintf("select count(*) from action_log %s", optionSQL)
-	err = dal.DB.Select(&result, sql, p)
+	err = dal.DB.SelectOne(&result, sql, p)
 	return
 }
 

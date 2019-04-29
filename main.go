@@ -5,8 +5,6 @@ import(
 	"fmt"
 	"release_manager/controller"
 	"release_manager/dal"
-	"release_manager/dal/dao"
-	"release_manager/domain"
 )
 
 var(
@@ -33,9 +31,5 @@ func main() {
 	router := maru.NewRouter(app)
 	router.AddRoute("/hello/(.*)", "home/hi", map[int]string{1 : "username"});
 
-	//maru.StartHttpServer(router, "0.0.0.0", 8080)
-	user, err := dao.User.GetUserById(37)
-	fmt.Printf("%#v\n", user)
-	fmt.Printf("%s\n", err)
-
+	maru.StartHttpServer(router, "0.0.0.0", 8080)
 }

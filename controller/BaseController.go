@@ -15,5 +15,8 @@ func (this *BaseController) Before() {
 	//no cache
 	this.W.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
 	//refresh session
-	this.Session.Set("keep-alive", time.Now().Unix())
+	t := time.Now()
+	this.Session.Set("keep-alive", t.Unix())
+	this.View.Set("copyright_year", t.Format("2006"))
+	this.View.Set("currController", this.Controller)
 }
