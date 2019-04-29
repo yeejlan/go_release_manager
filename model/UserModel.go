@@ -56,7 +56,7 @@ func (this *userModel) GetUserById(userid int) (*domain.User, error) {
 }
 
 //user login
-func (this *userModel) Login(ctx *maru.WebContext, username string, password string) (bool, error) {
+func (this *userModel) Login(ctx *maru.WebContext, username string, password string, clientIp string) (bool, error) {
 	if username == "" || password == "" {
 		return false, nil
 	}
@@ -72,12 +72,12 @@ func (this *userModel) Login(ctx *maru.WebContext, username string, password str
 		session.Set("username", user.Username)
 		session.Set("role", user.Role)
 
-		//Log.add(User.Id, User.Username, "login", "Success")
+		ActionLog.Add(user.Id, user.Username, "login", "Success", clientIp)
 
 		return true, nil
 	}
 
-	//Log.add(-1, user.Username, "login", "Failed")
+	ActionLog.Add(-1, user.Username, "login", "Failed", clientIp)
 
 	return false, nil
 }
