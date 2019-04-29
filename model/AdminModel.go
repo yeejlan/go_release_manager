@@ -30,7 +30,7 @@ func (this *adminModel) UpdateUser(ctx *maru.WebContext, userid int, password st
 	return dao.User.Update(userid, passwordMd5, role)
 }
 
-func (this *adminModel) ListUser(offset int, pageSize int) (result *[]domain.User, err error) {
+func (this *adminModel) ListUser(offset int, pageSize int) (result []domain.User, err error) {
 	return dao.User.List(offset, pageSize)
 }
 

@@ -48,14 +48,14 @@ func (this *userDao) Delete(userid int) (int, error) {
 	return dal.DB.Update(sql, p)
 }
 
-func (this *userDao) List(offset int, pageSize int) (result *[]domain.User, err error) {
+func (this *userDao) List(offset int, pageSize int) (result []domain.User, err error) {
 	p := map[string]interface{}{
 		"offset": offset,
 		"pageSize": pageSize,
 	}
-	result = &[]domain.User{}
+	result = []domain.User{}
 	sql := "select * from users limit :offset, :pageSize"
-	err = dal.DB.Select(result, sql, p)
+	err = dal.DB.Select(&result, sql, p)
 	return
 }
 
