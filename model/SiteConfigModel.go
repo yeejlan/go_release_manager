@@ -15,7 +15,7 @@ func (this *siteConfigModel) Add(siteConfig *domain.SiteConfig) (int, error) {
 	return dao.SiteConfig.Add(siteConfig)
 }
 
-func (this *siteConfigModel) List(offset int, pageSize int) (result *[]domain.SiteConfig, err error) {
+func (this *siteConfigModel) List(offset int, pageSize int) (result []domain.SiteConfig, err error) {
 	return dao.SiteConfig.List(offset, pageSize)
 }
 

@@ -30,7 +30,7 @@ func (this *actionLogDao) Add(userid int, username string, action_name string, r
 	return dal.DB.Insert(sql, p)
 }
 
-func (this *actionLogDao) List(dateFilter *time.Time, nameFilter string, offset int, pageSize int) (result *[]domain.ActionLog, err error) {
+func (this *actionLogDao) List(dateFilter *time.Time, nameFilter string, offset int, pageSize int) (result []domain.ActionLog, err error) {
 	optionSQL := this.buildOptionSQL(dateFilter, nameFilter)
 
 	p := map[string]interface{}{
@@ -40,8 +40,8 @@ func (this *actionLogDao) List(dateFilter *time.Time, nameFilter string, offset 
 		"username": nameFilter,
 	}
 	sql := fmt.Sprintf("select * from action_log %s order by id desc limit :offset , :pageSize", optionSQL)
-	result = &[]domain.ActionLog{}
-	err = dal.DB.Select(result, sql, p)
+	result = []domain.ActionLog{}
+	err = dal.DB.Select(&result, sql, p)
 	return
 }
 

@@ -24,15 +24,15 @@ func (this *siteConfigDao) Add(siteConfig *domain.SiteConfig) (int, error) {
 	return dal.DB.Insert(sql, siteConfig)
 }
 
-func (this *siteConfigDao) List(offset int, pageSize int) (result *[]domain.SiteConfig, err error) {
+func (this *siteConfigDao) List(offset int, pageSize int) (result []domain.SiteConfig, err error) {
 
 	p := map[string]interface{}{
 		"offset": offset,
 		"pageSize": pageSize,
 	}
 	sql := "select * from siteconfig limit :offset , :pageSize"
-	result = &[]domain.SiteConfig{}
-	err = dal.DB.Select(result, sql, p)
+	result = []domain.SiteConfig{}
+	err = dal.DB.Select(&result, sql, p)
 	return
 }
 

@@ -16,7 +16,7 @@ func (this *actionLogModel) Add(userid int, username string, action_name string,
 	return dao.ActionLog.Add(userid, username, action_name, return_message, log_ip)
 }
 
-func (this *actionLogModel) List(dateFilter *time.Time, nameFilter string, offset int, pageSize int) (*[]domain.ActionLog, error) {
+func (this *actionLogModel) List(dateFilter *time.Time, nameFilter string, offset int, pageSize int) ([]domain.ActionLog, error) {
 	return dao.ActionLog.List(dateFilter, nameFilter, offset, pageSize)
 }
 
