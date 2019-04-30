@@ -2,7 +2,7 @@ package controller
 
 import(
 	"github.com/yeejlan/maru"
-	"runtime/debug"
+	"fmt"
 )
 
 type ErrorController struct {
@@ -10,5 +10,5 @@ type ErrorController struct {
 }
 
 func (this *ErrorController) Page500Action() {
-	this.W.Write(debug.Stack())
+	fmt.Fprintf(this.W, "%s", this.Error)
 }

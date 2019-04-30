@@ -77,7 +77,7 @@ func (this *userModel) Login(ctx *maru.Ctx, username string, password string, cl
 		return true, nil
 	}
 
-	ActionLog.Add(-1, user.Username, "login", "Failed", clientIp)
+	ActionLog.Add(-1, username, "login", "Failed", clientIp)
 
 	return false, nil
 }
