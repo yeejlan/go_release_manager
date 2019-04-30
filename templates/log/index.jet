@@ -15,7 +15,7 @@
             	<legend>Result</legend>
                 <div class="pagination pagination-right paginationSet">
                     <ul>
-                    	{{pageStr}}
+                    	{{pageStr|raw}}
                     </ul>
                 </div>
                 <div>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="pagination pagination-right paginationSet">
                     <ul>
-                    	{{pageStr}}
+                    	{{pageStr|raw}}
                     </ul>
                 </div>
             </div>

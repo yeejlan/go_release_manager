@@ -2,6 +2,7 @@ package controller
 
 import(
 	"release_manager/model"
+	"release_manager/lib"
 )
 
 type LogController struct {
@@ -36,10 +37,8 @@ func (this *LogController) IndexAction(){
 		panic(err)
 	}
 	this.View.Set("logList", logList)
-	_ = baseUrl
-	_ = logTotal
-	pageStr := ""
-	//val pageStr = Paging.page(merged["total"] as Long, baseUrl, page, pageSize)
+
+	pageStr := lib.Paging.Page(this.WebContext, logTotal, baseUrl, page, pageSize)
 	this.View.Set("pageStr", pageStr)
 
 	this.Render("log/index")
