@@ -3,6 +3,8 @@ package lib
 import (
 	"net/http"
 	"strings"
+	"crypto/md5"
+	"fmt"
 )
 
 var (
@@ -18,4 +20,9 @@ func (this *utils) GetClientIp(r *http.Request) string {
 	}
 	ips := strings.Split(ipAddress, ",")
 	return ips[0]
+}
+
+func (this *utils) Md5(s string) string {
+	data := []byte(s)
+	return fmt.Sprintf("%x", md5.Sum(data))
 }
