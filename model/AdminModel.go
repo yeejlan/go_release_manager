@@ -12,7 +12,7 @@ var (
 
 type adminModel struct{}
 
-func (this *adminModel) NewUser(ctx *maru.WebContext, username string, password string, role string) (int, error) {
+func (this *adminModel) NewUser(ctx *maru.Ctx, username string, password string, role string) (int, error) {
 	passwordMd5 := User.GetPasswordMd5(ctx, password)
 	user := &domain.User{
 		Username: username,
@@ -22,7 +22,7 @@ func (this *adminModel) NewUser(ctx *maru.WebContext, username string, password 
 	return dao.User.Add(user)
 }
 
-func (this *adminModel) UpdateUser(ctx *maru.WebContext, userid int, password string, role string) (int, error) {
+func (this *adminModel) UpdateUser(ctx *maru.Ctx, userid int, password string, role string) (int, error) {
 	passwordMd5 := ""
 	if password != "" {
 		passwordMd5 = User.GetPasswordMd5(ctx, password)

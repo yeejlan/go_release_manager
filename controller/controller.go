@@ -4,6 +4,7 @@ package controller
 import "github.com/yeejlan/maru"
 
 func LoadActions() {
+	maru.AddAction("error/page500", ErrorController{}, "Page500")
 	maru.AddAction("home/hi", HomeController{}, "Hi")
 	maru.AddAction("home/index", HomeController{}, "Index")
 	maru.AddAction("log/index", LogController{}, "Index")

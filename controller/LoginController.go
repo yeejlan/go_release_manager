@@ -32,7 +32,7 @@ func (this *LoginController) PostAction() {
 	username := this.Param.Get("username")
 	password := this.Param.Get("password")
 	clientIp := lib.Utils.GetClientIp(this.Req)
-	loginResult, err := model.User.Login(this.WebContext, username, password, clientIp)
+	loginResult, err := model.User.Login(this.Ctx, username, password, clientIp)
 	if err != nil {
 		maru.Log("login", "login error: " + err.Error())
 		this.Redirect("/login?err=2")
@@ -53,7 +53,7 @@ func (this *LoginController) ExitAction() {
 }
 
 func (this *LoginController)  ChangePasswordAction() {
-	model.User.HasLoggedin(this.WebContext, true)
+	model.User.HasLoggedin(this.Ctx, true)
 
 	oldPassword := this.Param.Get("oldpassword")
 	newPassword := this.Param.Get("newpassword")
@@ -66,7 +66,7 @@ func (this *LoginController)  ChangePasswordAction() {
 	if len(this.Param)> 0 {
 		var msg = ""
 		var userid = this.Session.GetInt("uid")
-		verifyResult, err := model.User.VerifyPassword(this.WebContext, userid, oldPassword)
+		verifyResult, err := model.User.VerifyPassword(this.Ctx, userid, oldPassword)
 		if err!=nil {
 			msg = "Internal error on verifyPassword"
 		}
@@ -80,7 +80,7 @@ func (this *LoginController)  ChangePasswordAction() {
 			msg = "Confirm New Password do NOT match New Password!"
 		}
 		if msg == "" {
-			_, err = model.User.ChangePassword(this.WebContext, userid, newPassword)
+			_, err = model.User.ChangePassword(this.Ctx, userid, newPassword)
 			if err!=nil {
 				msg = "Internal error on changePassword"
 			}else {

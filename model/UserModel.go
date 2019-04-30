@@ -14,21 +14,21 @@ var (
 
 type userModel struct{}
 
-func (this *userModel) CurrentUserId(ctx *maru.WebContext) int {
+func (this *userModel) CurrentUserId(ctx *maru.Ctx) int {
 	return ctx.Session.GetInt("uid")
 }
 
-func (this *userModel) CurrentRole(ctx *maru.WebContext) string {
+func (this *userModel) CurrentRole(ctx *maru.Ctx) string {
 	return ctx.Session.GetString("role")
 }
 
-func (this *userModel) CurrentUserInfo(ctx *maru.WebContext) (*domain.User, error) {
+func (this *userModel) CurrentUserInfo(ctx *maru.Ctx) (*domain.User, error) {
 	userid := this.CurrentUserId(ctx)
 	return this.GetUserById(userid)
 }
 
 /*call this function when a page need user auth*/
-func (this *userModel) HasLoggedin(ctx *maru.WebContext, loginPageRedirect bool) bool {
+func (this *userModel) HasLoggedin(ctx *maru.Ctx, loginPageRedirect bool) bool {
 	if this.CurrentUserId(ctx) > 0 {
 		return true
 	}
@@ -40,7 +40,7 @@ func (this *userModel) HasLoggedin(ctx *maru.WebContext, loginPageRedirect bool)
 }
 
 /*call this function when a page need admin privilege*/
-func (this *userModel) IsAdmin(ctx *maru.WebContext, pageRedirect bool) bool {
+func (this *userModel) IsAdmin(ctx *maru.Ctx, pageRedirect bool) bool {
 	if this.CurrentRole(ctx) == "admin" {
 		return true
 	}
@@ -56,7 +56,7 @@ func (this *userModel) GetUserById(userid int) (*domain.User, error) {
 }
 
 //user login
-func (this *userModel) Login(ctx *maru.WebContext, username string, password string, clientIp string) (bool, error) {
+func (this *userModel) Login(ctx *maru.Ctx, username string, password string, clientIp string) (bool, error) {
 	if username == "" || password == "" {
 		return false, nil
 	}
@@ -82,7 +82,7 @@ func (this *userModel) Login(ctx *maru.WebContext, username string, password str
 	return false, nil
 }
 
-func (this *userModel) VerifyPassword(ctx *maru.WebContext, userid int, password string) (bool, error) { 
+func (this *userModel) VerifyPassword(ctx *maru.Ctx, userid int, password string) (bool, error) { 
 	if userid < 1 || password == "" {
 		return false, nil
 	}
@@ -98,7 +98,7 @@ func (this *userModel) VerifyPassword(ctx *maru.WebContext, userid int, password
 	return false, nil
 }
 
-func (this *userModel) ChangePassword(ctx *maru.WebContext, userid int, password string) (bool, error) {
+func (this *userModel) ChangePassword(ctx *maru.Ctx, userid int, password string) (bool, error) {
 	if userid < 1 || password == "" {
 		return false, maru.NewError("bad param")
 	}
@@ -110,7 +110,7 @@ func (this *userModel) ChangePassword(ctx *maru.WebContext, userid int, password
 	return true, nil
 }
 
-func (this *userModel) GetPasswordMd5(ctx *maru.WebContext, password string) string {
+func (this *userModel) GetPasswordMd5(ctx *maru.Ctx, password string) string {
 	sitePhrase := ctx.App.Config().Get("site.phrase")
 	data := []byte(password + sitePhrase)
 	return fmt.Sprintf("%x", md5.Sum(data))

@@ -13,7 +13,7 @@ var (
 
 type paging struct{}
 
-func (this *paging) Page(ctx *maru.WebContext, total int, baseUrlStr string, currentPage int, pageSize int) string {
+func (this *paging) Page(ctx *maru.Ctx, total int, baseUrlStr string, currentPage int, pageSize int) string {
 	var one = 1
 	if total % pageSize == 0 {
 		one = 0

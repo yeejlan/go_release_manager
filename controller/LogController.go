@@ -38,7 +38,7 @@ func (this *LogController) IndexAction(){
 	}
 	this.View.Set("logList", logList)
 
-	pageStr := lib.Paging.Page(this.WebContext, logTotal, baseUrl, page, pageSize)
+	pageStr := lib.Paging.Page(this.Ctx, logTotal, baseUrl, page, pageSize)
 	this.View.Set("pageStr", pageStr)
 
 	this.Render("log/index")

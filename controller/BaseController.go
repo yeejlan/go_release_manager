@@ -6,7 +6,7 @@ import(
 )
 
 type BaseController struct {
-	*maru.WebContext
+	*maru.Ctx
 }
 
 func (this *BaseController) Before() {
