@@ -10,5 +10,9 @@ type ErrorController struct {
 }
 
 func (this *ErrorController) Page500Action() {
-	fmt.Fprintf(this.W, "%s", this.Error)
+	fmt.Fprintf(this.W, "%s\n", "Internal Server Error")
+
+	if this.App.Env() == maru.DEVELOPMENT {
+		fmt.Fprintf(this.W, "%s", this.Error)
+	}
 }

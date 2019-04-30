@@ -11,3 +11,7 @@ func (this *HomeController) IndexAction() string {
 func (this *HomeController) HiAction() string {
 	return "hi " + this.Param["username"]
 }
+
+func (this *HomeController) ErrAction() string {
+	panic("this is a test!")
+}
