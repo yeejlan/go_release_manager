@@ -2,7 +2,6 @@ package controller
 
 import(
 	"release_manager/model"
-	"time"
 )
 
 type LogController struct {
@@ -25,16 +24,8 @@ func (this *LogController) IndexAction(){
 	}
 	var pageSize int = 10
 	var offset int = (page -1) * pageSize
-	var dateFilter *time.Time = nil
+	var dateFilter = date
 	var nameFilter = username
-	if(date != "") {
-		layout := "01/02/2006"  // MM/dd/yyyy
-		t, err := time.Parse(layout, date)
-		if err!= nil {
-			panic(err)
-		}
-		dateFilter = &t
-	}
 
 	logList, err := model.ActionLog.List(dateFilter, nameFilter, offset, pageSize)
 	if err!= nil {
@@ -44,7 +35,6 @@ func (this *LogController) IndexAction(){
 	if err!= nil {
 		panic(err)
 	}
-
 	this.View.Set("logList", logList)
 	_ = baseUrl
 	_ = logTotal

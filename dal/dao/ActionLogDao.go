@@ -23,14 +23,14 @@ func (this *actionLogDao) Add(userid int, username string, action_name string, r
 		"username": username,
 		"action_name": action_name,
 		"return_message": return_message,
-		"log_date": time.Now(),
+		"log_date": time.Now().Format("2006-01-02"),
 		"log_ip": log_ip,
 	}
 
 	return dal.DB.Insert(sql, p)
 }
 
-func (this *actionLogDao) List(dateFilter *time.Time, nameFilter string, offset int, pageSize int) (result []domain.ActionLog, err error) {
+func (this *actionLogDao) List(dateFilter string, nameFilter string, offset int, pageSize int) (result []domain.ActionLog, err error) {
 	optionSQL := this.buildOptionSQL(dateFilter, nameFilter)
 
 	p := map[string]interface{}{
@@ -45,7 +45,7 @@ func (this *actionLogDao) List(dateFilter *time.Time, nameFilter string, offset 
 	return
 }
 
-func (this *actionLogDao) Count(dateFilter *time.Time, nameFilter string) (result int, err error) {
+func (this *actionLogDao) Count(dateFilter string, nameFilter string) (result int, err error) {
 	optionSQL := this.buildOptionSQL(dateFilter, nameFilter)
 
 	p := map[string]interface{}{
@@ -57,9 +57,9 @@ func (this *actionLogDao) Count(dateFilter *time.Time, nameFilter string) (resul
 	return
 }
 
-func (this *actionLogDao) buildOptionSQL(dateFilter *time.Time, nameFilter string) string {
+func (this *actionLogDao) buildOptionSQL(dateFilter string, nameFilter string) string {
 	optionSQL := " where 1"
-	if dateFilter != nil {
+	if dateFilter != "" {
 		optionSQL += " and  log_date = :log_date "
 	}
 	if nameFilter != "" {
