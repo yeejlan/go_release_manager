@@ -18,7 +18,7 @@ func NewDBHelper(db *sqlx.DB) *DBHelper {
 }
 
 //select one record
-func (this *DBHelper) SelectOne(out interface{}, sql string, params map[string]interface{}) error {
+func (this *DBHelper) SelectOne(out interface{}, sql string, params interface{}) error {
 	stmt, err := this.DB.PrepareNamed(sql)
 	if err!= nil {
 		return maru.WrapError(err, 3)
