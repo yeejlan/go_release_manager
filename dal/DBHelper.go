@@ -25,13 +25,14 @@ func (this *DBHelper) SelectOne(out interface{}, sql string, params map[string]i
 	}
 
 	err = stmt.Get(out, params)
-	if err!= nil && err.Error() == "sql: no rows in result set" { //ignore not found error
+	if err == nil {
 		return nil
 	}
-	if err!= nil {
-		return maru.WrapError(err, 3)
+	if err.Error() == "sql: no rows in result set" { //ignore not found error
+		return nil
 	}
-	return nil
+
+	return maru.WrapError(err, 3)
 }
 
 //select
