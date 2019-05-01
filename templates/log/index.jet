@@ -37,7 +37,7 @@
                                 <td>{{log.Username}}</td>
                                 <td>{{log.Action_name}}</td>
                                 <td><a data-toggle="modal" href="#~" class="returnMessage">Return Message</a>
-									<div class="hidMessage">{{log.Return_message}}</div>
+									<div class="hidMessage">{{log.Return_message|raw}}</div>
 								</td>
                                 <td>{{log.Log_date}}</td>
                                 <td>{{log.Log_ip}}</td>
