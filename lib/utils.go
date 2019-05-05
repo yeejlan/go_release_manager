@@ -16,7 +16,8 @@ type utils struct{}
 func (this *utils) GetClientIp(r *http.Request) string {
 	ipAddress := r.Header.Get("X-Forwarded-For")
 	if ipAddress == "" {
-		ipAddress = r.RemoteAddr
+		addr := strings.Split(r.RemoteAddr, ":")
+		ipAddress = addr[0]
 	}
 	ips := strings.Split(ipAddress, ",")
 	return ips[0]
