@@ -1,0 +1,45 @@
+{{ include "header.jet" }}
+
+	<div class="container">
+		<legend>Users list</legend>
+        <div class="siteList">
+            <table class="table table-striped">
+                <thead>
+                    <th>Id</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Role</th>
+                    <th>&nbsp;&nbsp;&nbsp;Action</th>
+                </thead>
+                <tbody>
+					{{range user := userlist}}
+                    <tr>
+                        <td>{{user.Id}}</td>
+                        <td>{{user.Username}}</td>
+                        <td>*******</td>
+                        <td>{{user.Role}}</td>
+                        <td>
+                        	<a href="/admin/edit/?id={{user.Id}}" class="btn">Edit</a>
+                            <a href="#myModal" class="btn btn_delUser">Delete</a>
+                            <input type="hidden" value="{{user.Id}}" name="hidden"/>
+                        </td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>   
+        </div>
+	</div>
+    <div id="myModal" class="modal hide fade">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3>Message</h3>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure to delete ? </p>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn btn-danger">YES</a>
+            <a href="#" class="btn" data-dismiss="modal">NO</a>
+        </div>
+    </div>
+{{ include "footer.jet" }}
