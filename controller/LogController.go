@@ -9,6 +9,11 @@ type LogController struct {
 	BaseController
 }
 
+func (this *LogController) Before() {
+	(&this.BaseController).Before()
+	model.User.HasLoggedin(this.Ctx, true)
+}
+
 func (this *LogController) IndexAction(){
 	username := this.Param.Get("username")
 	date := this.Param.Get("date")
