@@ -19,5 +19,11 @@ func LoadActions() {
 	maru.AddAction("login/exit", LoginController{}, "Exit")
 	maru.AddAction("login/index", LoginController{}, "Index")
 	maru.AddAction("login/post", LoginController{}, "Post")
+	maru.AddAction("siteconfig/add", SiteConfigController{}, "Add")
+	maru.AddAction("siteconfig/delete", SiteConfigController{}, "Delete")
+	maru.AddAction("siteconfig/doadd", SiteConfigController{}, "DoAdd")
+	maru.AddAction("siteconfig/doedit", SiteConfigController{}, "DoEdit")
+	maru.AddAction("siteconfig/edit", SiteConfigController{}, "Edit")
+	maru.AddAction("siteconfig/index", SiteConfigController{}, "Index")
 
 }
