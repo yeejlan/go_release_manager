@@ -14,6 +14,7 @@ func LoadActions() {
 	maru.AddAction("home/err", HomeController{}, "Err")
 	maru.AddAction("home/hi", HomeController{}, "Hi")
 	maru.AddAction("home/index", HomeController{}, "Index")
+	maru.AddAction("home/runcommand", HomeController{}, "RunCommand")
 	maru.AddAction("log/index", LogController{}, "Index")
 	maru.AddAction("login/changepassword", LoginController{}, "ChangePassword")
 	maru.AddAction("login/exit", LoginController{}, "Exit")
