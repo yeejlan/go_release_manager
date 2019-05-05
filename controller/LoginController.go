@@ -59,7 +59,7 @@ func (this *LoginController)  ChangePasswordAction() {
 	newPassword := this.Param.Get("newpassword")
 	confirmPassword := this.Param.Get("confirmpassword")
 
-	this.View.Set("msg", "")
+	this.View.Set("message", "")
 	this.View.Set("oldPassword", oldPassword)
 	this.View.Set("newPassword", newPassword)
 	this.View.Set("confirmPassword", confirmPassword)
@@ -87,7 +87,7 @@ func (this *LoginController)  ChangePasswordAction() {
 				msg = "Your password updated successfully!"
 			}
 		}
-		this.View.Set("msg", msg)
+		this.View.Set("message", msg)
 	}
 	this.Render("login/changepassword")
 }

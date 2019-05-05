@@ -38,7 +38,7 @@
 						{{if session.GetString("username") != ""}}
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 							Logged in as 
-							<em class="nav-username"><%=session['username']%></em> 
+							<em class="nav-username">{{session.GetString("username")}}</em> 
 							<b class="caret"></b>
 						</a>
 						<ul class="dropdown-menu">
